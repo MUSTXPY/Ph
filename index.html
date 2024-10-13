@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع رشق لايكات إنستاجرام</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>رشق لايكات إنستاجرام</h2>
+        <input type="text" id="user" placeholder="اسم مستخدم الإنستاجرام">
+        <input type="text" id="post" placeholder="رابط منشور الإنستاجرام">
+        <button id="sendRequest">ارشق الآن</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        document.getElementById('sendRequest').addEventListener('click', function() {
+            var user = document.getElementById('user').value;
+            var post = document.getElementById('post').value;
+
+            // إرسال الطلب إلى السيرفر باستخدام Fetch API
+            fetch('http://localhost:5000/rashaq', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user: user,
+                    post: post
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = data.message;
+            })
+            .catch(error => {
+                document.getElementById('result').innerText = 'حدث خطأ أثناء الرشق';
+            });
+        });
+    </script>
+</body>
+</html>
